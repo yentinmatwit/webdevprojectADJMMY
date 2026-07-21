@@ -1,0 +1,14 @@
+
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#f4f6f8}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 40px;background:#1f4e79;color:#fff}
+nav a{color:#fff;text-decoration:none;margin-left:18px}
+.hero{padding:70px 20px;text-align:center;background:#ddeeff}
+.container{max-width:1100px;margin:30px auto;padding:0 20px}
+.card,.sidebar{background:#fff;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:260px 1fr;gap:20px}
+.job-placeholder{border:2px dashed #bbb;padding:30px;border-radius:8px;text-align:center}
+.btn{background:#1f4e79;color:#fff;border:none;padding:10px 18px;border-radius:5px;cursor:pointer}
+.form{max-width:420px;margin:40px auto;background:#fff;padding:25px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.form input{display:block;width:100%;margin:10px 0;padding:10px}
+footer{text-align:center;background:#1f4e79;color:#fff;padding:16px;margin-top:40px}
+@media(max-width:768px){header{flex-direction:column}.grid{grid-template-columns:1fr}}
