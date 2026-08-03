@@ -1,6 +1,143 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Title TBD</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header><h2>Title TBD</h2><nav>
-<a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="applications.html">Applications</a><a href="saved-jobs.html">Saved</a><a href="profile.html">Profile</a><a href="login.html">Login</a>
-</nav></header>
-<div class='container'><div class='card'><h2>Dashboard</h2><p>Overview widgets supplied by backend.</p></div></div>
-<footer>© 2026 Web Dev Project</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobTrack - Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--Header/Nav-->
+<header>
+  <h2>JobTrack</h2>
+  <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">&#9776;</button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="applications.html">Applications</a>
+    <a href="saved-jobs.html">Saved</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<!--Dashboard-->
+<div class="container">
+
+  <h2 style="margin-bottom: 20px; color: #1f4e79;">Welcome back, Michael</h2>
+
+  <!-- Stats Overview -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="number">12</div>
+      <div class="label">Applications Sent</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">3</div>
+      <div class="label">Interviews Scheduled</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">5</div>
+      <div class="label">Saved Jobs</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">1</div>
+      <div class="label">Offers Received</div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Application Progress -->
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Current Application Progress</h2>
+      <p style="color:#666; font-size:.9rem; margin-bottom:16px;">Frontend Developer at TechNova Inc.</p>
+
+      <div class="progress-track">
+        <div class="progress-step completed">
+          <div class="dot"></div>
+          <span>Applied</span>
+        </div>
+        <div class="progress-line filled"></div>
+        <div class="progress-step completed">
+          <div class="dot"></div>
+          <span>Reviewed</span>
+        </div>
+        <div class="progress-line filled"></div>
+        <div class="progress-step active">
+          <div class="dot"></div>
+          <span>Interview</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step">
+          <div class="dot"></div>
+          <span>Offer</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step">
+          <div class="dot"></div>
+          <span>Accepted</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Recent Activity & Quick Actions -->
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:24px;">
+
+    <!-- Recent Activity -->
+    <div class="card">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-dot green"></div>
+          <span>Interview confirmed &mdash; TechNova Inc.</span>
+          <span class="activity-time">Today</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot blue"></div>
+          <span>Applied to Data Analyst &mdash; FinEdge Corp.</span>
+          <span class="activity-time">Yesterday</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot orange"></div>
+          <span>Application viewed &mdash; Creativa Labs</span>
+          <span class="activity-time">2 days ago</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot blue"></div>
+          <span>Saved QA Test Engineer &mdash; DevOps United</span>
+          <span class="activity-time">3 days ago</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot green"></div>
+          <span>Offer received &mdash; CloudSync Systems</span>
+          <span class="activity-time">1 week ago</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+      <h2>Quick Actions</h2>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+        <a href="index.html" class="btn btn-primary btn-block">Browse Jobs</a>
+        <a href="applications.html" class="btn btn-outline btn-block">View Applications</a>
+        <a href="saved-jobs.html" class="btn btn-outline btn-block">Saved Jobs</a>
+        <a href="profile.html" class="btn btn-outline btn-block">Edit Profile</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!--Footer-->
+<footer>
+  <p>&copy; 2026 JobTrack &mdash; COMP4650 Web Dev Project</p>
+</footer>
+
+</body>
+</html>

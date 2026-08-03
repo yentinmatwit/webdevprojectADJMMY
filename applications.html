@@ -1,6 +1,76 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Title TBD</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header><h2>Title TBD</h2><nav>
-<a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="applications.html">Applications</a><a href="saved-jobs.html">Saved</a><a href="profile.html">Profile</a><a href="login.html">Login</a>
-</nav></header>
-<div class='container'><div class='card'><h2>Applications</h2><p>Application history placeholder.</p></div></div>
-<footer>© 2026 Web Dev Project</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobTrack - Applications</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--Header/Nav-->
+<header>
+  <h2>JobTrack</h2>
+  <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">&#9776;</button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html" class="active">Applications</a>
+    <a href="saved-jobs.html">Saved</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<!--Applications Content-->
+<div class="container">
+
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+      <h2 style="margin-bottom:0;">My Applications</h2>
+
+      <!-- Status filter -->
+      <div style="display:flex; gap:8px; align-items:center;">
+        <label for="statusFilter" style="font-size:.88rem; font-weight:600; color:#555;">Filter:</label>
+        <select id="statusFilter" onchange="filterApps()" style="padding:6px 10px; border:1px solid #ddd; border-radius:6px;">
+          <option value="">All Statuses</option>
+          <option value="Applied">Applied</option>
+          <option value="Interview">Interview</option>
+          <option value="Offered">Offered</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Alert for actions -->
+    <div id="appAlert" class="alert alert-success"></div>
+
+    <!-- Applications table -->
+    <div style="overflow-x:auto;">
+      <table class="app-table">
+        <thead>
+          <tr>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Date Applied</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="appTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!--Footer-->
+<footer>
+  <p>&copy; 2026 JobTrack &mdash; COMP4650 Web Dev Project</p>
+</footer>
+
+<script src="applications.js"></script>
+
+</body>
+</html>

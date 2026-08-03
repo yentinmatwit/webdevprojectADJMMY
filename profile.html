@@ -1,6 +1,126 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Title TBD</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header><h2>Title TBD</h2><nav>
-<a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="applications.html">Applications</a><a href="saved-jobs.html">Saved</a><a href="profile.html">Profile</a><a href="login.html">Login</a>
-</nav></header>
-<div class='container'><div class='card'><h2>User Profile</h2><p>Profile information placeholder.</p></div></div>
-<footer>© 2026 Web Dev Project</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobTrack - Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--Header/Nav-->
+<header>
+  <h2>JobTrack</h2>
+  <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">&#9776;</button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html">Applications</a>
+    <a href="saved-jobs.html">Saved</a>
+    <a href="profile.html" class="active">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<!--Profile Content-->
+<div class="container">
+
+  <div id="profileAlert" class="alert alert-success"></div>
+
+  <div class="profile-header">
+    <div class="profile-avatar">MY</div>
+    <div class="profile-info">
+      <h2>Michael Yentin</h2>
+      <p>Computer Science Student &bull; Wentworth Institute of Technology</p>
+      <p style="font-size:.85rem; color:#999;">Boston, MA &bull; yentinm@wit.edu</p>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+    <!-- About/Bio -->
+    <div class="card">
+      <div class="profile-section">
+        <h3>About</h3>
+        <p id="bioText">Senior CS student focused on full-stack web development and UI/UX design. Looking for entry-level developer roles and summer internship opportunities.</p>
+        <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="editBio()">Edit</button>
+      </div>
+
+      <div class="profile-section">
+        <h3>Skills</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="tag tag-blue">HTML</span>
+          <span class="tag tag-blue">CSS</span>
+          <span class="tag tag-blue">JavaScript</span>
+          <span class="tag tag-blue">React</span>
+          <span class="tag tag-blue">Node.js</span>
+          <span class="tag tag-blue">MySQL</span>
+          <span class="tag tag-blue">Firebase</span>
+          <span class="tag tag-blue">Git</span>
+          <span class="tag tag-blue">Figma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience & Education -->
+    <div class="card">
+      <div class="profile-section">
+        <h3>Education</h3>
+        <div style="margin-bottom:12px;">
+          <strong>B.S. Computer Science</strong>
+          <p style="color:#666; font-size:.9rem;">Wentworth Institute of Technology &bull; Expected May 2027</p>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h3>Experience</h3>
+        <div style="margin-bottom:12px;">
+          <strong>Web Development Intern</strong>
+          <p style="color:#666; font-size:.9rem;">TechNova Inc. &bull; Summer 2025</p>
+          <p style="font-size:.88rem; margin-top:4px;">Built responsive UI components and contributed to the company's internal dashboard using React and REST APIs.</p>
+        </div>
+        <div>
+          <strong>IT Help Desk</strong>
+          <p style="color:#666; font-size:.9rem;">Wentworth IT Services &bull; Sep 2024 &ndash; May 2025</p>
+          <p style="font-size:.88rem; margin-top:4px;">Provided technical support to faculty and students, resolved hardware and software issues.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Account Settings -->
+  <div class="card" style="margin-top:24px;">
+    <h2>Account Settings</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+      <div class="form-group">
+        <label for="profileName">Full Name</label>
+        <input type="text" id="profileName" value="Michael Yentin">
+      </div>
+      <div class="form-group">
+        <label for="profileEmail">Email</label>
+        <input type="email" id="profileEmail" value="yentinm@wit.edu">
+      </div>
+      <div class="form-group">
+        <label for="profileLocation">Location</label>
+        <input type="text" id="profileLocation" value="Boston, MA">
+      </div>
+      <div class="form-group">
+        <label for="profilePhone">Phone</label>
+        <input type="tel" id="profilePhone" value="(617) 555-0123">
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:10px;" onclick="saveSettings()">Save Changes</button>
+  </div>
+
+</div>
+
+<!--Footer-->
+<footer>
+  <p>&copy; 2026 JobTrack &mdash; COMP4650 Web Dev Project</p>
+</footer>
+
+<script src="profile.js"></script>
+
+</body>
+</html>

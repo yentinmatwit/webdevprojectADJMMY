@@ -1,8 +1,109 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Title TBD</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header><h2>Title TBD</h2><nav>
-<a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="applications.html">Applications</a><a href="saved-jobs.html">Saved</a><a href="profile.html">Profile</a><a href="login.html">Login</a>
-</nav></header>
-<section class='hero'><h1>Title TBD</h1><p>Responsive frontend template ready for backend integration.</p></section>
-<div class='container'><div class='grid'><div class='sidebar'><h3>Filters</h3><p>Category</p><p>Location</p><p>Status</p></div>
-<div class='card'><h2>Listings</h2><div class='job-placeholder'>Database records will be rendered here.</div></div></div></div>
-<footer>© 2026 Web Dev Project</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobTrack - Find Your Next Role</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--Header/Nav-->
+<header>
+  <h2>JobTrack</h2>
+  <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">&#9776;</button>
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="applications.html">Applications</a>
+    <a href="saved-jobs.html">Saved</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<!--Hero & Search-->
+<section class="hero">
+  <h1>Find Your Next Opportunity</h1>
+  <p>Browse thousands of listings, track your applications, and stay organized throughout your job search.</p>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Job title, keyword, or company">
+    <select id="locationFilter">
+      <option value="">All Locations</option>
+      <option value="Boston, MA">Boston, MA</option>
+      <option value="New York, NY">New York, NY</option>
+      <option value="San Francisco, CA">San Francisco, CA</option>
+      <option value="Remote">Remote</option>
+      <option value="Chicago, IL">Chicago, IL</option>
+    </select>
+    <button onclick="filterJobs()">Search</button>
+  </div>
+</section>
+
+<!--Main Content-->
+<div class="container">
+  <div class="grid">
+
+    <!-- Sidebar Filters -->
+    <div class="sidebar">
+      <h3>Filters</h3>
+
+      <div class="filter-group">
+        <label for="industryFilter">Industry</label>
+        <select id="industryFilter" onchange="filterJobs()">
+          <option value="">All Industries</option>
+          <option value="Technology">Technology</option>
+          <option value="Finance">Finance</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Education">Education</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="typeFilter">Job Type</label>
+        <select id="typeFilter" onchange="filterJobs()">
+          <option value="">All Types</option>
+          <option value="Full-Time">Full-Time</option>
+          <option value="Part-Time">Part-Time</option>
+          <option value="Internship">Internship</option>
+          <option value="Contract">Contract</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="experienceFilter">Experience Level</label>
+        <select id="experienceFilter" onchange="filterJobs()">
+          <option value="">All Levels</option>
+          <option value="Entry Level">Entry Level</option>
+          <option value="Mid Level">Mid Level</option>
+          <option value="Senior">Senior</option>
+        </select>
+      </div>
+
+      <button class="btn btn-outline btn-block" onclick="clearFilters()">Clear Filters</button>
+    </div>
+
+    <!-- Job Listings -->
+    <div>
+      <div class="card">
+        <h2>Job Listings</h2>
+        <p id="resultCount" style="color:#666; font-size:.9rem; margin-bottom:14px;">Showing 8 results</p>
+        <div class="job-list" id="jobList">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Footer-->
+<footer>
+  <p>&copy; 2026 JobTrack &mdash; COMP4650 Web Dev Project</p>
+</footer>
+
+<script src="index.js"></script>
+
+</body>
+</html>
