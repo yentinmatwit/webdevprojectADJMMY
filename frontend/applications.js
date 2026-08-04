@@ -45,7 +45,7 @@ function renderApps(list) {
 //Filter by status
 async function filterApps() {
   var statusVal = document.getElementById("statusFilter").value;
-  var params = statusVal ? "?status=" + encodeURIComponent(statusVale) : "";
+  var params = statusVal ? "?status=" + encodeURIComponent(statusVal) : "";
 
   try{
     var filtered = await apiFetch("/api/applications/" + params);

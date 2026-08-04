@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JobTrack - Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <script src="/static/js/config.js"></script>
-  <script src="/static/js/auth-guard.js"></script>
+  <script src="config.js"></script>
+  <script src="auth-guard.js"></script>
 </head>
 <body>
 
@@ -27,7 +27,7 @@
 <!--Dashboard-->
 <div class="container">
 
-  <h2 style="margin-bottom: 20px; color: #1f4e79;">Welcome back, Michael</h2>
+  <h2 style="margin-bottom: 20px; color: #1f4e79;" id="welcomeHeading">Welcome back...</h2>
 
   <!-- Stats Overview -->
   <div class="stats-row">
@@ -54,34 +54,9 @@
     <!-- Application Progress -->
     <div class="card" style="grid-column: 1 / -1;">
       <h2>Current Application Progress</h2>
-      <p style="color:#666; font-size:.9rem; margin-bottom:16px;">Frontend Developer at TechNova Inc.</p>
+      <p style="color:#666; font-size:.9rem; margin-bottom:16px;" id="progressJobLabel">Loading...</p>
 
-      <div class="progress-track">
-        <div class="progress-step completed">
-          <div class="dot"></div>
-          <span>Applied</span>
-        </div>
-        <div class="progress-line filled"></div>
-        <div class="progress-step completed">
-          <div class="dot"></div>
-          <span>Reviewed</span>
-        </div>
-        <div class="progress-line filled"></div>
-        <div class="progress-step active">
-          <div class="dot"></div>
-          <span>Interview</span>
-        </div>
-        <div class="progress-line"></div>
-        <div class="progress-step">
-          <div class="dot"></div>
-          <span>Offer</span>
-        </div>
-        <div class="progress-line"></div>
-        <div class="progress-step">
-          <div class="dot"></div>
-          <span>Accepted</span>
-        </div>
-      </div>
+      <div class="progress-track" id="progressTrack"></div>
     </div>
 
   </div>

@@ -24,7 +24,7 @@ class ActivitySerializer(serializers.ModelSerializer):
 
 
 class DashboardSummarySerializer(serializers.Serializer):
-    application_sent = serializers.IntegerField()
+    applications_sent = serializers.IntegerField()
     interviews_scheduled = serializers.IntegerField()
     saved_jobs = serializers.IntegerField()
     offers_received = serializers.IntegerField()

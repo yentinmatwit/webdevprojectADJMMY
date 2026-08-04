@@ -68,7 +68,7 @@ class DashboardSummaryView(APIView):
     def get(self, request):
         user = request.user
         data = {
-            "application_sent": Application.objects.filter(user=user).count(),
+            "applications_sent": Application.objects.filter(user=user).count(),
             "interviews_scheduled": Application.objects.filter(user=user, status = "Interview").count(),
             "saved_jobs": SavedJob.objects.filter(user=user).count(),
             "offers_received": Application.objects.filter(user=user, status="Offered").count()

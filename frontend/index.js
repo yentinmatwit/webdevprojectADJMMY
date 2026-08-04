@@ -25,9 +25,9 @@ function renderJobs(list) {
       + '<span class="company">' + job.company + '</span>'
       + '<div class="meta">'
       +   '<span>' + job.location + '</span>'
-      +   '<span>' + job.type + '</span>'
-      +   '<span>' + job.experience + '</span>'
-      +   '<span>' + job.posted + '</span>'
+      +   '<span>' + job.job_type + '</span>'
+      +   '<span>' + job.experience_level + '</span>'
+      +   '<span>' + job.posted_at + '</span>'
       + '</div>'
       + '<div style="margin-bottom:10px;">' + tagsHtml + '</div>'
       + '<div class="actions">'
@@ -40,12 +40,18 @@ function renderJobs(list) {
 }
 
 async function loadJobs() {
-  jobs = await apiFetch("/jobs/");
-  renderJobs(jobs);
+  try {
+    jobs = await apiFetch("/api/jobs/");
+    renderJobs(jobs);
+  } catch (err) {
+    console.error(err);
+    document.getElementById("jobList").innerHTML =
+      '<p style="color:#999;">Couldn\'t load jobs.</p>';
+  }
 }
 
 //Filter jobs based on all inputs
-function filterJobs() {
+async function filterJobs() {
   var keyword = document.getElementById("searchInput").value;
   var loc = document.getElementById("locationFilter").value;
   var industry = document.getElementById("industryFilter").value;
@@ -59,9 +65,14 @@ function filterJobs() {
   if (type) params.set("job_type", type);
   if (exp) params.set("experience_level", exp);
 
-  const res = await apiFetch("/api/jobs/?" + params.toString());
-  const jobs = await res.json();
-  renderJobs(jobs);
+  try {
+    var filtered = await apiFetch("/api/jobs/?" + params.toString());
+    renderJobs(filtered);
+  } catch (err) {
+    console.error(err);
+    document.getElementById("jobList").innerHTML =
+      '<p style="color:#999;">Couldn\'t load jobs.</p>';
+  }
 }
 
 //Reset all filters
@@ -71,39 +82,44 @@ function clearFilters() {
   document.getElementById("industryFilter").value = "";
   document.getElementById("typeFilter").value = "";
   document.getElementById("experienceFilter").value = "";
-  renderJobs(jobs);
+  loadJobs();
 }
 
 //Placeholder actions
 async function applyToJob(id) {
   if (!isLoggedIn()) {
-    alert("Please Log in to apply.");
+    alert("Please log in to apply.");
     window.location.href = "login.html";
     return;
   }
 
-  const res = await apiFetch("/api/jobs/" + id + "/apply/", { method: "POST" });
-  const data = await res.json();
-  if (!res.ok) { alert(data.detail || "Couldn't apply."); return; }
-  alert("Applicaiton submitted! (Track it on the applications page)");
+  try {
+    await apiFetch("/api/jobs/" + id + "/apply/", { method: "POST" });
+    alert("Application submitted! (Track it on the Applications page)");
+  } catch (err) {
+    alert(err.message || "Couldn't apply.");
+  }
 }
-function saveJob(id) {
+
+async function saveJob(id) {
   if (!isLoggedIn()) {
-    alert("Please Log in to apply.");
+    alert("Please log in to save jobs.");
     window.location.href = "login.html";
     return;
   }
 
-  const res = await apiFetch("/api/jobs/" + id + "/save/", { method: "POST" });
-  const data = await res.json();
-  if (!res.ok) { alert(data.detail || "Couldn't save job."); return; }
-  alert("Job saved! (View it on the saved page)");
+  try {
+    await apiFetch("/api/jobs/" + id + "/save/", { method: "POST" });
+    alert("Job saved! (View it on the Saved page)");
+  } catch (err) {
+    alert(err.message || "Couldn't save job.");
+  }
 }
 
-//Search on Enter key (might have to remove)
+//Search on Enter key
 document.getElementById("searchInput").addEventListener("keyup", function(e) {
   if (e.key === "Enter") filterJobs();
 });
 
 //Initial render
-loadJobs;
+loadJobs();
