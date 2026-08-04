@@ -26,24 +26,36 @@ function renderSaved() {
   container.innerHTML = html;
 }
 
-async function loadSaved() {
-  var data = await apiFetch("/saved-jobs/");
-  savedJobs = data.map(function(sj) { return sj.job; });
+async function loadSavedJobs() {
+  const res = await apiFetch("/api/saved-jobs/");
+  if (!res.ok) {
+    showAlert("Couldn't load saved jobs.");
+    return;
+  }
+  savedJobs = await res.json();
   renderSaved();
 }
 
 //Remove from saved
 async function removeSaved(id) {
-  await apiFetch(`/saved-jobs/${id}/`, {method: "DELETE" });
-  savedJobs = savedJobs.filter(function(j) { return j.id !== id; });
-  renderSaved();
+  const res = await apiFetch("/api/saved-jobs/" + jobId + "/", { method: "DELETE" });
+  if (!res.ok){
+    showAlert("Couldn't remove job.");
+    return;
+  }
+  await loadSavedJobs();
   showAlert("Job removed from saved list.");
 }
 
 //Apply from saved
 async function applyFromSaved(id) {
-  await apiFetch(`/jobs/${id}/apply/`, { method: "POST" });
-  alert("Application submitted");
+  const res = await apiFetch("/api/jobs/" + jobId + "/apply/", { method: "POST" });
+  const data = await res.json();
+  if (!res.ok) {
+    showAlert(data.detail || "Couldn't apply.");
+    return;
+  }
+  showalert("Application submitted!");
 }
 
 //Show success alert (Might have to remove)
@@ -55,4 +67,4 @@ function showAlert(msg) {
 }
 
 //Initial render
-loadSaved();
+loadSavedJobs();

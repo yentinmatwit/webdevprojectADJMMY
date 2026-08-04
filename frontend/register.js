@@ -45,11 +45,13 @@ async function handleRegister() {
     valid = false;
   }
 
-  if (valid) {
+  if (!valid) return;
+
     try{
 
-      await apiFetch("/auth/register/", {
+      const res = await Fetch(API_BASE + "/api/auth/register/", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           full_name: name,
           email: email,
@@ -58,12 +60,24 @@ async function handleRegister() {
           preferred_job_type: pref,
         }),
       });
+      const data = await res.json();
 
+      if (!res.ok) {
+        alert(formatErrors(data));
+        return;
+      }
+
+      setTokens(data.access, data.refresh)
       window.location.href = "login.html";
     } catch (err) {
-      alert(err.message);
+      alert("Network error. Is the server running?");
     }
-  }
+}
+
+function formatErrors(data) {
+  return Object.entries(data)
+    .map(function(entry) { return entry[0] + ": " + entry[1]; })
+    .join("\n");
 }
 
 //Allow Enter key to submit (maybe remove, test commented out)

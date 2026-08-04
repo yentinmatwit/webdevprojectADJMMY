@@ -59,21 +59,9 @@ function filterJobs() {
   if (type) params.set("job_type", type);
   if (exp) params.set("experience_level", exp);
 
-  var filtered = await apiFetch("/jobs/?" + params.toString());
-
-  //Probably don't need
-  /*var filtered = jobs.filter(function(job) {
-    var matchKeyword = !keyword || job.title.toLowerCase().indexOf(keyword) !== -1
-      || job.company.toLowerCase().indexOf(keyword) !== -1
-      || job.tags.join(" ").toLowerCase().indexOf(keyword) !== -1;
-    var matchLoc = !loc || job.location === loc;
-    var matchInd = !industry || job.industry === industry;
-    var matchType = !type || job.type === type;
-    var matchExp = !exp || job.experience === exp;
-    return matchKeyword && matchLoc && matchInd && matchType && matchExp;
-  });*/
-
-  renderJobs(filtered);
+  const res = await apiFetch("/api/jobs/?" + params.toString());
+  const jobs = await res.json();
+  renderJobs(jobs);
 }
 
 //Reset all filters
@@ -88,20 +76,28 @@ function clearFilters() {
 
 //Placeholder actions
 async function applyToJob(id) {
-  try{
-    await apiFetch(`/jobs/${id}/apply/`, { method: "POST" });
-    alert("Application submitted! (Track it on the Applicaitons page)");
-  } catch (err) {
-    alert(err.message);
+  if (!isLoggedIn()) {
+    alert("Please Log in to apply.");
+    window.location.href = "login.html";
+    return;
   }
+
+  const res = await apiFetch("/api/jobs/" + id + "/apply/", { method: "POST" });
+  const data = await res.json();
+  if (!res.ok) { alert(data.detail || "Couldn't apply."); return; }
+  alert("Applicaiton submitted! (Track it on the applications page)");
 }
 function saveJob(id) {
-  try {
-    await apiFetch(`/jobs/${id}/save/`, { method: "POST" });
-    alert("Job saved! (View it on the Saved page)")
-  } catch (err) {
-    alert(err.message);
+  if (!isLoggedIn()) {
+    alert("Please Log in to apply.");
+    window.location.href = "login.html";
+    return;
   }
+
+  const res = await apiFetch("/api/jobs/" + id + "/save/", { method: "POST" });
+  const data = await res.json();
+  if (!res.ok) { alert(data.detail || "Couldn't save job."); return; }
+  alert("Job saved! (View it on the saved page)");
 }
 
 //Search on Enter key (might have to remove)

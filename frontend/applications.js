@@ -2,8 +2,12 @@
 var applications = [];
 
 async function loadApplications() {
-  applications = await apiFetch("/applications/");
-  renderApps();
+  try {
+    applications = await apiFetch("/api/applications/");
+    renderApps(applications);
+  } catch (err) {
+    showAlert(err.message || "Couldn't load applications")
+  }
 }
 
 //Map status to CSS class
@@ -42,8 +46,13 @@ function renderApps(list) {
 async function filterApps() {
   var statusVal = document.getElementById("statusFilter").value;
   var params = statusVal ? "?status=" + encodeURIComponent(statusVale) : "";
-  var filtered = await apiFetch("/applications/" + params);
-  renderApps(filtered);
+
+  try{
+    var filtered = await apiFetch("/api/applications/" + params);
+    renderApps(filtered);
+  } catch (err) {
+    showAlert(err.message || "Couldn't filter applications");
+  }
 }
 
 //View application details
@@ -55,10 +64,15 @@ function viewApp(id) {
 //Withdraw application
 async function withdrawApp(id) {
   if (!confirm("Withdraw this application?")) return;
-  await apiFetch(`/applications/${id}/withdraw/`, { method: "DELETE"});
-  applications = applications.filter(function(a) { return a.id !== id; });
-  renderApps(applications);
-  showAlert("Application withdrawn.");
+
+  try {
+    await apiFetch(`/api/applications/${id}/withdraw/`, { method: "DELETE"});
+    applications = applications.filter(function(a) { return a.id !== id; });
+    renderApps(applications);
+    showAlert("Application withdrawn.");
+  } catch (err) {
+    showAlert(err.message || "Couldn't withdraw applicaiton.")
+  }
 }
 
 //Show success alert
