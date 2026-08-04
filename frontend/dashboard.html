@@ -30,19 +30,19 @@
   <!-- Stats Overview -->
   <div class="stats-row">
     <div class="stat-card">
-      <div class="number">12</div>
+      <div class="number" id="statApplications">0</div>
       <div class="label">Applications Sent</div>
     </div>
     <div class="stat-card">
-      <div class="number">3</div>
+      <div class="number" id="statInterviews">0</div>
       <div class="label">Interviews Scheduled</div>
     </div>
     <div class="stat-card">
-      <div class="number">5</div>
+      <div class="number" id="statSaved">0</div>
       <div class="label">Saved Jobs</div>
     </div>
     <div class="stat-card">
-      <div class="number">1</div>
+      <div class="number" id="statOffers">0</div>
       <div class="label">Offers Received</div>
     </div>
   </div>
@@ -90,33 +90,7 @@
     <!-- Recent Activity -->
     <div class="card">
       <h2>Recent Activity</h2>
-      <div class="activity-list">
-        <div class="activity-item">
-          <div class="activity-dot green"></div>
-          <span>Interview confirmed &mdash; TechNova Inc.</span>
-          <span class="activity-time">Today</span>
-        </div>
-        <div class="activity-item">
-          <div class="activity-dot blue"></div>
-          <span>Applied to Data Analyst &mdash; FinEdge Corp.</span>
-          <span class="activity-time">Yesterday</span>
-        </div>
-        <div class="activity-item">
-          <div class="activity-dot orange"></div>
-          <span>Application viewed &mdash; Creativa Labs</span>
-          <span class="activity-time">2 days ago</span>
-        </div>
-        <div class="activity-item">
-          <div class="activity-dot blue"></div>
-          <span>Saved QA Test Engineer &mdash; DevOps United</span>
-          <span class="activity-time">3 days ago</span>
-        </div>
-        <div class="activity-item">
-          <div class="activity-dot green"></div>
-          <span>Offer received &mdash; CloudSync Systems</span>
-          <span class="activity-time">1 week ago</span>
-        </div>
-      </div>
+      <div class="activity-list" id="activityList"></div>
     </div>
 
     <!-- Quick Actions -->
@@ -138,6 +112,9 @@
 <footer>
   <p>&copy; 2026 JobTrack &mdash; COMP4650 Web Dev Project</p>
 </footer>
+
+<script src="api.js"></script>
+<script src="dashboard.js"></script>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 //Registration validation
-function handleRegister() {
+async function handleRegister() {
   var valid = true;
 
   //Reset all error states
@@ -46,12 +46,27 @@ function handleRegister() {
   }
 
   if (valid) {
-    alert("Account created! Redirecting to login...");
-    window.location.href = "login.html";
+    try{
+
+      await apiFetch("/auth/register/", {
+        method: "POST",
+        body: JSON.stringify({
+          full_name: name,
+          email: email,
+          password: password,
+          confirm_password: confirm,
+          preferred_job_type: pref,
+        }),
+      });
+
+      window.location.href = "login.html";
+    } catch (err) {
+      alert(err.message);
+    }
   }
 }
 
-//Allow Enter key to submit
+//Allow Enter key to submit (maybe remove, test commented out)
 document.addEventListener("keyup", function(e) {
   if (e.key === "Enter") handleRegister();
 });

@@ -1,14 +1,10 @@
 //Application Data 
-var applications = [
-  { id:1, title:"Frontend Developer", company:"TechNova Inc.", date:"2026-07-28", status:"Interview" },
-  { id:2, title:"Data Analyst", company:"FinEdge Corp.", date:"2026-07-27", status:"Applied" },
-  { id:3, title:"UX Design Intern", company:"Creativa Labs", date:"2026-07-25", status:"Applied" },
-  { id:4, title:"Marketing Coordinator", company:"BrightPath Media", date:"2026-07-20", status:"Rejected" },
-  { id:5, title:"Backend Engineer", company:"CloudSync Systems", date:"2026-07-18", status:"Offered" },
-  { id:6, title:"Teaching Assistant", company:"Wentworth Institute", date:"2026-07-15", status:"Interview" },
-  { id:7, title:"QA Test Engineer", company:"DevOps United", date:"2026-07-10", status:"Applied" },
-  { id:8, title:"Project Manager", company:"BuildRight Co.", date:"2026-07-05", status:"Rejected" }
-];
+var applications = [];
+
+async function loadApplications() {
+  applications = await apiFetch("/applications/");
+  renderApps();
+}
 
 //Map status to CSS class
 function statusClass(status) {
@@ -29,9 +25,9 @@ function renderApps(list) {
   for (var i = 0; i < list.length; i++) {
     var app = list[i];
     html += '<tr>'
-      + '<td><strong>' + app.title + '</strong></td>'
-      + '<td>' + app.company + '</td>'
-      + '<td>' + app.date + '</td>'
+      + '<td><strong>' + app.job.title + '</strong></td>'
+      + '<td>' + app.job.company + '</td>'
+      + '<td>' + app.date_applied + '</td>'
       + '<td><span class="status ' + statusClass(app.status) + '">' + app.status + '</span></td>'
       + '<td>'
       +   '<button class="btn btn-outline btn-sm" onclick="viewApp(' + app.id + ')">Details</button> '
@@ -43,29 +39,26 @@ function renderApps(list) {
 }
 
 //Filter by status
-function filterApps() {
-  var status = document.getElementById("statusFilter").value;
-  if (!status) {
-    renderApps(applications);
-  } else {
-    var filtered = applications.filter(function(app) { return app.status === status; });
-    renderApps(filtered);
-  }
+async function filterApps() {
+  var statusVal = document.getElementById("statusFilter").value;
+  var params = statusVal ? "?status=" + encodeURIComponent(statusVale) : "";
+  var filtered = await apiFetch("/applications/" + params);
+  renderApps(filtered);
 }
 
 //View application details
 function viewApp(id) {
   var app = applications.find(function(a) { return a.id === id; });
-  if (app) alert("Details for: " + app.title + " at " + app.company + "\nStatus: " + app.status);
+  if (app) alert("Details for: " + app.job.title + " at " + app.job.company + "\nStatus: " + app.status);
 }
 
 //Withdraw application
-function withdrawApp(id) {
-  if (confirm("Withdraw this application?")) {
-    applications = applications.filter(function(a) { return a.id !== id; });
-    filterApps();
-    showAlert("Application withdrawn.");
-  }
+async function withdrawApp(id) {
+  if (!confirm("Withdraw this application?")) return;
+  await apiFetch(`/applications/${id}/withdraw/`, { method: "DELETE"});
+  applications = applications.filter(function(a) { return a.id !== id; });
+  renderApps(applications);
+  showAlert("Application withdrawn.");
 }
 
 //Show success alert
@@ -77,4 +70,4 @@ function showAlert(msg) {
 }
 
 //Initial render
-renderApps(applications);
+loadApplications();

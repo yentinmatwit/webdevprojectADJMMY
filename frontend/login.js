@@ -1,5 +1,5 @@
 //Login validation
-function handleLogin() {
+async function handleLogin() {
   var valid = true;
 
   //Reset errors
@@ -22,13 +22,19 @@ function handleLogin() {
     valid = false;
   }
 
-  if (valid) {
-    alert("Login successful! Redirecting to dashboard...");
+  if (!valid) return;
+
+  try {
+    await apiFetch("/auth/login/", { method: "POST", body: JSON.stringify({ email, password }) })
     window.location.href = "dashboard.html";
+  } catch (err) {
+    var alertEl = document.getElementById("loginAlert");
+    alertEl.textContent = err.message === "Request failed" ? "Invalid email or password." : err.message
+    alertEl.style.display = "block"
   }
 }
 
-//Allow Enter key to submit
+//Allow Enter key to submit (maybe remove, test commented out)
 document.addEventListener("keyup", function(e) {
   if (e.key === "Enter") handleLogin();
 });

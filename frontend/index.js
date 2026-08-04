@@ -1,22 +1,5 @@
 //Job Dataset
-var jobs = [
-  { id:1, title:"Frontend Developer", company:"TechNova Inc.", location:"Boston, MA", type:"Full-Time", industry:"Technology", experience:"Entry Level", posted:"2 days ago",
-    tags:["HTML","CSS","JavaScript"] },
-  { id:2, title:"Data Analyst", company:"FinEdge Corp.", location:"New York, NY", type:"Full-Time", industry:"Finance", experience:"Mid Level", posted:"3 days ago",
-    tags:["SQL","Python","Excel"] },
-  { id:3, title:"UX Design Intern", company:"Creativa Labs", location:"Remote", type:"Internship", industry:"Technology", experience:"Entry Level", posted:"1 day ago",
-    tags:["Figma","User Research"] },
-  { id:4, title:"Marketing Coordinator", company:"BrightPath Media", location:"Chicago, IL", type:"Full-Time", industry:"Marketing", experience:"Entry Level", posted:"5 days ago",
-    tags:["SEO","Content","Analytics"] },
-  { id:5, title:"Registered Nurse", company:"CityHealth Hospital", location:"Boston, MA", type:"Full-Time", industry:"Healthcare", experience:"Mid Level", posted:"1 week ago",
-    tags:["Patient Care","EMR"] },
-  { id:6, title:"Backend Engineer", company:"CloudSync Systems", location:"San Francisco, CA", type:"Full-Time", industry:"Technology", experience:"Senior", posted:"4 days ago",
-    tags:["Node.js","AWS","PostgreSQL"] },
-  { id:7, title:"Teaching Assistant", company:"Wentworth Institute", location:"Boston, MA", type:"Part-Time", industry:"Education", experience:"Entry Level", posted:"6 days ago",
-    tags:["Tutoring","Grading"] },
-  { id:8, title:"QA Test Engineer", company:"DevOps United", location:"Remote", type:"Contract", industry:"Technology", experience:"Mid Level", posted:"2 days ago",
-    tags:["Selenium","Jest","CI/CD"] }
-];
+var jobs = [];
 
 //Render job cards into the list
 function renderJobs(list) {
@@ -56,15 +39,30 @@ function renderJobs(list) {
   container.innerHTML = html;
 }
 
+async function loadJobs() {
+  jobs = await apiFetch("/jobs/");
+  renderJobs(jobs);
+}
+
 //Filter jobs based on all inputs
 function filterJobs() {
-  var keyword = document.getElementById("searchInput").value.toLowerCase();
+  var keyword = document.getElementById("searchInput").value;
   var loc = document.getElementById("locationFilter").value;
   var industry = document.getElementById("industryFilter").value;
   var type = document.getElementById("typeFilter").value;
   var exp = document.getElementById("experienceFilter").value;
 
-  var filtered = jobs.filter(function(job) {
+  var params = new URLSearchParams();
+  if (keyword) params.set("keyword", keyword);
+  if (loc) params.set("location", loc);
+  if (industry) params.set("industry", industry);
+  if (type) params.set("job_type", type);
+  if (exp) params.set("experience_level", exp);
+
+  var filtered = await apiFetch("/jobs/?" + params.toString());
+
+  //Probably don't need
+  /*var filtered = jobs.filter(function(job) {
     var matchKeyword = !keyword || job.title.toLowerCase().indexOf(keyword) !== -1
       || job.company.toLowerCase().indexOf(keyword) !== -1
       || job.tags.join(" ").toLowerCase().indexOf(keyword) !== -1;
@@ -73,7 +71,7 @@ function filterJobs() {
     var matchType = !type || job.type === type;
     var matchExp = !exp || job.experience === exp;
     return matchKeyword && matchLoc && matchInd && matchType && matchExp;
-  });
+  });*/
 
   renderJobs(filtered);
 }
@@ -89,17 +87,27 @@ function clearFilters() {
 }
 
 //Placeholder actions
-function applyToJob(id) {
-  alert("Application submitted for job #" + id + "! (Track it on the Applications page)");
+async function applyToJob(id) {
+  try{
+    await apiFetch(`/jobs/${id}/apply/`, { method: "POST" });
+    alert("Application submitted! (Track it on the Applicaitons page)");
+  } catch (err) {
+    alert(err.message);
+  }
 }
 function saveJob(id) {
-  alert("Job #" + id + " saved! (View it on the Saved page)");
+  try {
+    await apiFetch(`/jobs/${id}/save/`, { method: "POST" });
+    alert("Job saved! (View it on the Saved page)")
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
-//Search on Enter key
+//Search on Enter key (might have to remove)
 document.getElementById("searchInput").addEventListener("keyup", function(e) {
   if (e.key === "Enter") filterJobs();
 });
 
 //Initial render
-renderJobs(jobs);
+loadJobs;
